@@ -4,24 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eldrex Writings | Personal Blog</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js"></script>
-    <script src="js/firebase-config.js" defer></script>
-    <script src="js/blog.js" defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-emberflare-50/90 backdrop-blur-md border-b border-emberflare-200 transition-colors duration-300">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-4">
-                    <button id="backButton" class="flex items-center gap-2 text-emberflare-600 hover:text-primary transition-colors duration-200 group">
+                    <button id="backButton" class="flex items-center gap-2 text-emberflare-600 hover:text-emberflare-700 transition-colors duration-200 group">
                         <span class="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
                         <span class="text-sm font-bold">Back</span>
                     </button>
@@ -29,172 +23,245 @@
                 <div class="flex items-center gap-2">
                     <h1 class="text-emberflare-800 text-sm md:text-base font-bold tracking-tight">Eldrex Writings</h1>
                 </div>
-                <div class="w-[60px]">
-                    <button id="settingsBtn" class="icon-button" aria-label="Settings">
-                        <i class="fas fa-cog"></i>
+                <div class="flex items-center gap-2">
+                    <button id="settingsButton" class="p-2 rounded-lg hover:bg-emberflare-50 transition-colors" aria-label="Settings">
+                        <i class="fas fa-sliders-h text-emberflare-600"></i>
                     </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Settings Panel -->
-    <div id="settingsPanel" class="settings-panel">
-        <div class="settings-content">
-            <div class="settings-header">
-                <h3>Settings</h3>
-                <button id="closeSettings" class="icon-button">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="settings-group">
-                <h4>Username</h4>
-                <input type="text" id="usernameInput" placeholder="Enter username (optional)" class="input-field">
-                <button id="updateUsername" class="btn-primary">Update Username</button>
-                <button id="removeUsername" class="btn-secondary">Remove Username</button>
-            </div>
-            
-            <div class="settings-group">
-                <h4>Legal</h4>
-                <a href="#" class="settings-link">Privacy Policy</a>
-                <a href="#" class="settings-link">Terms of Use</a>
-                <a href="#" class="settings-link">License</a>
-            </div>
-            
-            <div class="settings-group">
-                <button id="clearCache" class="btn-secondary">Clear Cache & Reset</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Comment Username Modal -->
-    <div id="usernameModal" class="modal">
-        <div class="modal-content">
-            <h3>Choose a Username</h3>
-            <p>You can comment anonymously or choose a username:</p>
-            <input type="text" id="commentUsername" placeholder="Anonymous (leave blank)" class="input-field">
-            <div class="modal-actions">
-                <button id="cancelUsername" class="btn-secondary">Cancel</button>
-                <button id="saveUsername" class="btn-primary">Continue</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
+    <main class="pt-16 min-h-screen bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Page Header -->
-            <div class="page-header">
-                <h1 class="page-title">Thoughts & Reflections</h1>
-                <p class="page-subtitle">Personal writings on growth, learning, and life experiences</p>
-                
-                <!-- Search Bar -->
-                <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Search posts..." class="search-input">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-                
-                <!-- Year Filter -->
-                <div class="year-filter">
-                    <select id="yearFilter" class="select-filter">
-                        <option value="">All Years</option>
-                        <!-- Dynamically populated -->
-                    </select>
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Thoughts & Reflections</h1>
+                <p class="text-lg text-gray-600">Personal writings on growth, learning, and life experiences</p>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <!-- Search Bar -->
+                    <div class="flex-1">
+                        <div class="relative">
+                            <input type="text" 
+                                   id="searchInput" 
+                                   placeholder="Search posts by title, content, or category..."
+                                   class="w-full px-4 py-3 pl-12 pr-10 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emberflare-500 focus:border-transparent outline-none transition-all">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <button id="clearSearch" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Year Filter -->
+                    <div class="w-full md:w-48">
+                        <select id="yearFilter" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emberflare-500 focus:border-transparent outline-none appearance-none cursor-pointer">
+                            <option value="">All Years</option>
+                            <!-- Years will be populated dynamically -->
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Categories Bar -->
-            <div class="categories-container">
-                <div class="categories-scroll">
-                    <button class="category-btn active" data-category="all">All Posts</button>
-                    <!-- Dynamically populated -->
-                </div>
-                <div class="scroll-arrows">
-                    <button class="scroll-arrow left" aria-label="Scroll left">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="scroll-arrow right" aria-label="Scroll right">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
+            <div class="mb-8">
+                <div class="relative">
+                    <div id="categoriesContainer" class="flex space-x-3 pb-4 overflow-x-auto scrollbar-hide">
+                        <!-- Categories will be populated dynamically -->
+                        <div class="animate-pulse flex space-x-3">
+                            <div class="h-10 w-24 bg-gray-200 rounded-full"></div>
+                            <div class="h-10 w-32 bg-gray-200 rounded-full"></div>
+                            <div class="h-10 w-28 bg-gray-200 rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none"></div>
                 </div>
             </div>
 
             <!-- Posts Grid -->
-            <div class="posts-grid" id="postsGrid">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading posts...</p>
+            <div id="postsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Posts will be loaded here -->
+                <div class="col-span-full flex justify-center items-center py-12">
+                    <div class="text-center">
+                        <div class="w-16 h-16 border-4 border-emberflare-200 border-t-emberflare-600 rounded-full animate-spin mx-auto mb-4"></div>
+                        <p class="text-gray-600">Loading posts...</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Pagination -->
-            <div class="pagination" id="pagination"></div>
+            <!-- No Results -->
+            <div id="noResults" class="hidden text-center py-12">
+                <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">No posts found</h3>
+                <p class="text-gray-500">Try adjusting your search or filters</p>
+            </div>
+
+            <!-- Load More -->
+            <div id="loadMoreContainer" class="mt-12 text-center hidden">
+                <button id="loadMoreBtn" 
+                        class="px-6 py-3 bg-emberflare-600 text-white font-semibold rounded-xl hover:bg-emberflare-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emberflare-500 focus:ring-offset-2">
+                    Load More Posts
+                </button>
+            </div>
         </div>
     </main>
 
-    <!-- Fullscreen Post -->
-    <div id="fullscreenPost" class="fullscreen-post">
-        <div class="fullscreen-header">
-            <button id="closeFullscreen" class="back-btn">
-                <i class="fas fa-arrow-left"></i>
-                Back to Posts
-            </button>
-            <div class="post-actions">
-                <button id="likeBtn" class="icon-button" aria-label="Like post">
-                    <i class="far fa-heart"></i>
-                    <span id="likeCount">0</span>
-                </button>
-                <button id="shareBtn" class="icon-button" aria-label="Share post">
-                    <i class="fas fa-share-alt"></i>
-                </button>
-            </div>
-        </div>
-        
-        <div class="fullscreen-content">
-            <!-- Content loaded dynamically -->
-        </div>
-        
-        <!-- Comments Section -->
-        <div class="comments-section">
-            <div class="comments-header">
-                <h3>Comments</h3>
-                <button id="addCommentBtn" class="btn-primary">
-                    <i class="fas fa-plus"></i> Add Comment
-                </button>
-            </div>
-            
-            <div class="comment-form" id="commentForm">
-                <textarea id="commentInput" placeholder="Add a comment..." rows="3"></textarea>
-                <div class="comment-form-actions">
-                    <button id="cancelComment" class="btn-secondary">Cancel</button>
-                    <button id="submitComment" class="btn-primary">Post Comment</button>
+    <!-- Settings Panel -->
+    <div id="settingsPanel" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50" id="settingsOverlay"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl transform transition-transform duration-300 translate-y-full">
+            <div class="p-6">
+                <!-- Drag Handle -->
+                <div class="flex justify-center mb-4">
+                    <div class="w-12 h-1.5 bg-gray-300 rounded-full"></div>
                 </div>
-            </div>
-            
-            <div class="comments-list" id="commentsList">
-                <!-- Comments loaded dynamically -->
+
+                <!-- Settings Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold text-gray-900">Settings</h2>
+                    <button id="closeSettings" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fas fa-times text-gray-500"></i>
+                    </button>
+                </div>
+
+                <!-- Username Section -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Username</label>
+                    <div class="flex gap-2">
+                        <input type="text" 
+                               id="usernameInput" 
+                               placeholder="Anonymous"
+                               class="flex-1 px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emberflare-500 focus:border-transparent outline-none">
+                        <button id="saveUsername" class="px-4 py-3 bg-emberflare-600 text-white font-semibold rounded-xl hover:bg-emberflare-700 transition-colors">
+                            Save
+                        </button>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">Your username will be displayed with your comments</p>
+                </div>
+
+                <!-- Legal Links -->
+                <div class="space-y-3 mb-6">
+                    <a href="#" class="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors group">
+                        <span class="font-medium text-gray-700">Privacy Policy</span>
+                        <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors group">
+                        <span class="font-medium text-gray-700">Terms of Use</span>
+                        <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors group">
+                        <span class="font-medium text-gray-700">License</span>
+                        <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
+                    </a>
+                </div>
+
+                <!-- Remove Username -->
+                <button id="removeUsername" class="w-full py-3 text-red-600 font-semibold border border-red-200 rounded-xl hover:bg-red-50 transition-colors">
+                    Remove Username
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <div class="logo-icon">E</div>
-                <span>Eldrex Writings</span>
+    <!-- Fullscreen Post View -->
+    <div id="fullscreenPost" class="fixed inset-0 z-40 bg-white overflow-y-auto hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Post Header -->
+            <div class="sticky top-0 bg-white/95 backdrop-blur-sm z-10 pb-6 border-b border-gray-200 mb-8">
+                <div class="flex items-center justify-between">
+                    <button id="closeFullscreen" class="flex items-center gap-2 text-emberflare-600 hover:text-emberflare-700 transition-colors group">
+                        <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                        <span class="font-semibold">Back to Posts</span>
+                    </button>
+                    <div class="flex items-center gap-3">
+                        <button id="sharePost" class="p-2 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Share">
+                            <i class="fas fa-share-alt text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <p class="footer-copyright">
-                © 2025 Eldrex Writings. All rights reserved.
-            </p>
-            <div class="footer-links">
-                <a href="#" class="footer-link">Home</a>
-                <a href="#" class="footer-link">About</a>
-                <a href="#" class="footer-link">Contact</a>
-                <a href="#" class="footer-link">Privacy</a>
+
+            <!-- Post Content -->
+            <div id="postContent" class="prose prose-lg max-w-none">
+                <!-- Post content will be loaded here -->
+            </div>
+
+            <!-- Comments Section -->
+            <div id="commentsSection" class="mt-12 pt-8 border-t border-gray-200">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Comments</h3>
+                
+                <!-- Add Comment -->
+                <div class="mb-8 bg-gray-50 rounded-xl p-6">
+                    <div id="commentForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Add a comment</label>
+                            <textarea id="commentInput" 
+                                      rows="3"
+                                      placeholder="Share your thoughts..."
+                                      class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emberflare-500 focus:border-transparent outline-none resize-none"></textarea>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                You're commenting as: <span id="currentUsername" class="font-semibold text-gray-700">Anonymous</span>
+                            </div>
+                            <button id="submitComment" 
+                                    class="px-6 py-2 bg-emberflare-600 text-white font-semibold rounded-xl hover:bg-emberflare-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emberflare-500 focus:ring-offset-2">
+                                Post Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments List -->
+                <div id="commentsList" class="space-y-6">
+                    <!-- Comments will be loaded here -->
+                </div>
+
+                <!-- No Comments -->
+                <div id="noComments" class="hidden text-center py-8">
+                    <i class="fas fa-comments text-3xl text-gray-300 mb-3"></i>
+                    <p class="text-gray-600">No comments yet. Be the first to share your thoughts!</p>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- Username Modal -->
+    <div id="usernameModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Choose a Username</h3>
+            <p class="text-gray-600 mb-6">You can comment anonymously or choose a username to display.</p>
+            
+            <div class="space-y-4">
+                <input type="text" 
+                       id="modalUsernameInput" 
+                       placeholder="Enter username (optional)"
+                       class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emberflare-500 focus:border-transparent outline-none">
+                
+                <div class="flex gap-3">
+                    <button id="useAnonymous" 
+                            class="flex-1 py-3 text-gray-700 font-semibold border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">
+                        Stay Anonymous
+                    </button>
+                    <button id="saveModalUsername" 
+                            class="flex-1 py-3 bg-emberflare-600 text-white font-semibold rounded-xl hover:bg-emberflare-700 transition-colors">
+                        Use Username
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/blog.js"></script>
 </body>
 </html>
