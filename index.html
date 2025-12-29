@@ -1,1054 +1,1251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eldrex Writings | Personal Blog</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emberflare: {
+                            50: '#fff5f5',
+                            100: '#ffe3e3',
+                            200: '#ffc2c2',
+                            300: '#ff9a9a',
+                            400: '#f06a6a',
+                            500: '#d64545',
+                            600: '#b93a3a',
+                            700: '#9b2f2f',
+                            800: '#7d2626',
+                            900: '#651f1f',
+                            950: '#3d1212',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'scale-in': 'scaleIn 0.2s ease-out',
+                        'pulse-subtle': 'pulseSubtle 2s ease-in-out infinite',
+                        'bounce-subtle': 'bounceSubtle 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' }
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-4px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        /* === Emberflare Color Palette === */
-        :root {
-            --emberflare-50: #fff5f5;
-            --emberflare-100: #ffe3e3;
-            --emberflare-200: #ffc2c2;
-            --emberflare-300: #ff9a9a;
-            --emberflare-400: #f06a6a;
-            --emberflare-500: #d64545;
-            --emberflare-600: #b93a3a;
-            --emberflare-700: #9b2f2f;
-            --emberflare-800: #7d2626;
-            --emberflare-900: #651f1f;
-            --emberflare-950: #3d1212;
-
-            /* Theme Variables - Light Mode Only */
-            --primary: var(--emberflare-600);
-            --primary-hover: var(--emberflare-700);
-            --primary-light: var(--emberflare-100);
-            --primary-transparent: rgba(214, 69, 69, 0.1);
-
-            --text-primary: #1a1a1a;
-            --text-secondary: #444;
-            --text-tertiary: #777;
-            --text-inverse: #ffffff;
-
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --bg-tertiary: #f1f3f5;
-            --bg-card: #ffffff;
-            --bg-overlay: rgba(0, 0, 0, 0.5);
-
-            --border-color: #e9ecef;
-            --border-light: #f1f3f5;
-            --border-radius-sm: 10px;
-            --border-radius-md: 20px;
-            --border-radius-lg: 20px;
-            --border-radius-xl: 40px;
-            --border-radius-full: 9999px;
-
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
-            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
-
-            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-
-            --header-height: 64px;
-            --max-content-width: 1200px;
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
         }
-
-        /* === Base Styles === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        
+        .dark .glass-panel {
+            background: rgba(15, 15, 15, 0.85);
         }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
+        
+        .category-scrollbar::-webkit-scrollbar {
+            height: 4px;
         }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: var(--max-content-width);
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1.25rem;
-            }
-        }
-
-        /* === Header === */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: var(--header-height);
-            background-color: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-            max-width: var(--max-content-width);
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .header-title {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .icon-button {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--border-radius-full);
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-fast);
-        }
-
-        .icon-button:hover {
-            background: var(--bg-tertiary);
-            color: var(--primary);
-            transform: translateY(-1px);
-        }
-
-        /* === Main Content === */
-        .main-content {
-            margin-top: calc(var(--header-height) + 2rem);
-            padding-bottom: 4rem;
-            min-height: calc(100vh - var(--header-height));
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .page-title {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 0.75rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--emberflare-400) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .page-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-        }
-
-        /* === Search and Filters === */
-        .search-filters-container {
-            margin-bottom: 2rem;
-            position: sticky;
-            top: calc(var(--header-height) + 1rem);
-            background: var(--bg-primary);
-            padding: 1rem 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .search-box {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            font-family: inherit;
-            font-size: 1rem;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            transition: all var(--transition-fast);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-transparent);
-        }
-
-        .search-button {
-            padding: 0.75rem 1.5rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius-md);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all var(--transition-fast);
-        }
-
-        .search-button:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .category-scroll {
-            flex: 1;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding-bottom: 0.5rem;
-        }
-
-        .category-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .category-list {
-            display: flex;
-            gap: 0.5rem;
-            padding: 0.25rem 0;
-        }
-
-        .category-btn {
-            padding: 0.5rem 1rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-full);
-            color: var(--text-secondary);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all var(--transition-fast);
-            font-size: 0.875rem;
-        }
-
-        .category-btn:hover {
-            background: var(--bg-tertiary);
-            color: var(--primary);
-        }
-
-        .category-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .year-filter {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.875rem;
-            min-width: 120px;
-        }
-
-        .clear-filters {
-            padding: 0.5rem 1rem;
+        
+        .category-scrollbar::-webkit-scrollbar-track {
             background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all var(--transition-fast);
         }
-
-        .clear-filters:hover {
-            background: var(--bg-tertiary);
-            color: var(--primary);
+        
+        .category-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--tw-color-emberflare-300);
+            border-radius: 2px;
         }
-
-        /* === Posts Grid === */
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
+        
+        .dark .category-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--tw-color-emberflare-600);
         }
-
-        @media (max-width: 768px) {
-            .posts-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
+        
+        .post-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .post-card {
-            background: var(--bg-card);
-            border-radius: var(--border-radius-xl);
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: all var(--transition-base);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .post-card:hover {
+        
+        .post-card-hover:hover {
             transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(214, 69, 69, 0.1);
         }
-
-        .post-media-container {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-            background: var(--bg-tertiary);
+        
+        .dark .post-card-hover:hover {
+            box-shadow: 0 20px 40px rgba(214, 69, 69, 0.2);
         }
-
-        .post-media {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform var(--transition-base);
+        
+        .comment-enter {
+            animation: slideUp 0.3s ease-out;
         }
-
-        .post-card:hover .post-media {
-            transform: scale(1.05);
-        }
-
-        .post-badge {
+        
+        .ripple {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--primary);
-            color: white;
-            padding: 0.375rem 0.875rem;
-            border-radius: var(--border-radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .post-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .post-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            line-height: 1.4;
-            color: var(--text-primary);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .post-excerpt {
-            color: var(--text-secondary);
-            font-size: 0.9375rem;
-            line-height: 1.6;
-            flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .post-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            margin-top: auto;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .post-date {
-            font-size: 0.875rem;
-            color: var(--text-tertiary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .post-read-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius-full);
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .post-read-btn:hover {
-            background: var(--primary-hover);
-            transform: translateX(2px);
-        }
-
-        /* === Fullscreen Post View === */
-        .post-fullscreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-primary);
-            z-index: 2000;
-            overflow-y: auto;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity var(--transition-base);
-        }
-
-        .post-fullscreen.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .post-fullscreen-header {
-            position: sticky;
-            top: 0;
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-            backdrop-filter: blur(20px);
-        }
-
-        .post-fullscreen-back {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--border-radius-full);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-weight: 500;
-        }
-
-        .post-fullscreen-back:hover {
-            background: var(--bg-tertiary);
-            transform: translateX(-4px);
-        }
-
-        .post-fullscreen-content {
-            max-width: var(--max-content-width);
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .post-fullscreen-title {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .post-fullscreen-meta {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.875rem;
-            color: var(--text-tertiary);
-        }
-
-        .post-fullscreen-media-container {
-            width: 100%;
-            max-height: 400px;
-            border-radius: var(--border-radius-xl);
-            overflow: hidden;
-            margin-bottom: 2.5rem;
-            background: var(--bg-tertiary);
-        }
-
-        .post-fullscreen-media {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .post-fullscreen-body {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            color: var(--text-primary);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .post-fullscreen-body p {
-            margin-bottom: 1.5rem;
-        }
-
-        .post-fullscreen-body img {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius-md);
-            margin: 1.5rem 0;
-        }
-
-        /* === Comments Section === */
-        .comments-section {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .comments-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .comment-form {
-            margin-bottom: 2rem;
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: var(--border-radius-lg);
-        }
-
-        .comment-input {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            font-family: inherit;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .comment-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .comment-submit-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius-md);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all var(--transition-fast);
-        }
-
-        .comment-submit-btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .comment-submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .comments-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .comment-item {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: var(--border-radius-lg);
-            border: 1px solid var(--border-color);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .comment-author {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .comment-author-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .admin-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 0.25rem 0.5rem;
-            border-radius: var(--border-radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .comment-date {
-            font-size: 0.875rem;
-            color: var(--text-tertiary);
-        }
-
-        .comment-content {
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-
-        .comment-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .like-btn, .reply-btn, .delete-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            transition: color var(--transition-fast);
-        }
-
-        .like-btn:hover {
-            color: var(--primary);
-        }
-
-        .like-btn.liked {
-            color: var(--primary);
-        }
-
-        .delete-btn {
-            color: var(--emberflare-400);
-        }
-
-        .delete-btn:hover {
-            color: var(--emberflare-600);
-        }
-
-        /* === Likes Display === */
-        .likes-display {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .like-count {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* === Settings Panel === */
-        .settings-panel {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border-color);
-            transform: translateY(100%);
-            transition: transform var(--transition-base);
-            z-index: 3000;
-            padding: 2rem;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .settings-panel.active {
-            transform: translateY(0);
-        }
-
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .settings-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .close-settings {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-
-        .settings-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .settings-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .settings-section-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .username-input {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            font-family: inherit;
-            font-size: 1rem;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-
-        .settings-btn {
-            padding: 0.75rem 1rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 1rem;
-            text-align: left;
-            transition: all var(--transition-fast);
-        }
-
-        .settings-btn:hover {
-            background: var(--bg-tertiary);
-            color: var(--primary);
-        }
-
-        .danger-btn {
-            color: var(--emberflare-600);
-            border-color: var(--emberflare-200);
-            background: var(--emberflare-50);
-        }
-
-        .danger-btn:hover {
-            background: var(--emberflare-100);
-        }
-
-        /* === Loading States === */
-        .loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem;
-            min-height: 50vh;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--primary);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
+            background: rgba(214, 69, 69, 0.4);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .no-posts {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem;
-            color: var(--text-secondary);
-        }
-
-        /* === Footer === */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            text-align: center;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-        }
-
-        .footer-copyright {
-            color: var(--text-tertiary);
-            font-size: 0.875rem;
-        }
-
-        /* === Utility Classes === */
-        .no-scroll {
-            overflow: hidden;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 480px) {
-            .post-fullscreen-title {
-                font-size: 2rem;
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
             }
-            
-            .post-fullscreen-content {
-                padding: 2rem 1.25rem;
-            }
-            
-            .settings-panel {
-                padding: 1.5rem;
-            }
+        }
+        
+        .blurred {
+            filter: blur(8px);
+            user-select: none;
+            pointer-events: none;
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <a href="/" class="header-title">Eldrex Writings</a>
-            <div class="header-controls">
-                <button class="icon-button" id="settings-toggle" aria-label="Open settings">
-                    <i class="fas fa-cog"></i>
+<body class="bg-white text-gray-900 dark:bg-emberflare-950 dark:text-emberflare-100 font-sans transition-colors duration-300 min-h-screen">
+    
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50">
+        <div class="bg-white dark:bg-emberflare-900 rounded-2xl p-8 max-w-md w-full shadow-2xl transform scale-95 animate-scale-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-emberflare-800 dark:text-emberflare-100">Welcome</h2>
+                <button onclick="closeAuthModal()" class="p-2 hover:bg-emberflare-100 dark:hover:bg-emberflare-800 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined">close</span>
                 </button>
+            </div>
+            
+            <p class="text-gray-600 dark:text-emberflare-300 mb-6">
+                To engage with comments and likes, please choose how you'd like to proceed:
+            </p>
+            
+            <div class="space-y-4">
+                <button onclick="loginAnonymously()" class="w-full bg-emberflare-500 hover:bg-emberflare-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined">person</span>
+                    Continue Anonymously
+                </button>
+                
+                <button onclick="continueWithoutLogin()" class="w-full border-2 border-emberflare-300 dark:border-emberflare-700 hover:border-emberflare-500 dark:hover:border-emberflare-400 text-emberflare-700 dark:text-emberflare-300 font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+                    Continue Without Login
+                </button>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-emberflare-200 dark:border-emberflare-800">
+                <p class="text-xs text-gray-500 dark:text-emberflare-400">
+                    By continuing, you agree to our 
+                    <a href="terms.html" class="text-emberflare-600 dark:text-emberflare-400 hover:underline">Terms of Use</a> 
+                    and 
+                    <a href="privacy.html" class="text-emberflare-600 dark:text-emberflare-400 hover:underline">Privacy Policy</a>.
+                    Anonymous users can only read posts.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 w-full glass-panel border-b border-emberflare-200 dark:border-emberflare-800">
+        <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <button onclick="history.back()" class="flex items-center gap-2 text-emberflare-600 dark:text-emberflare-400 hover:text-emberflare-800 dark:hover:text-emberflare-200 transition-colors group">
+                <span class="material-symbols-outlined text-xl group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                <span class="text-sm font-medium hidden sm:inline">Back</span>
+            </button>
+            
+            <h1 class="absolute left-1/2 -translate-x-1/2 text-xl font-bold tracking-[-0.015em] text-emberflare-800 dark:text-emberflare-100">
+                Eldrex Writings
+            </h1>
+            
+            <div class="flex items-center gap-2">
+                <button id="settings-btn" onclick="openSettings()" class="p-2 hover:bg-emberflare-100 dark:hover:bg-emberflare-800 rounded-lg transition-colors relative" aria-label="Settings">
+                    <span class="material-symbols-outlined">settings</span>
+                </button>
+                
+                <a href="admin.html" class="p-2 hover:bg-emberflare-100 dark:hover:bg-emberflare-800 rounded-lg transition-colors" aria-label="Admin">
+                    <span class="material-symbols-outlined">admin_panel_settings</span>
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <div class="page-header">
-                <h1 class="page-title">Thoughts & Reflections</h1>
-                <p class="page-subtitle">Personal writings on growth, learning, and life experiences</p>
+    <!-- Settings Panel (Bottom Sheet) -->
+    <div id="settings-panel" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50" onclick="closeSettings()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-emberflare-900 rounded-t-3xl p-6 transform translate-y-full transition-transform duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-emberflare-800 dark:text-emberflare-100">Settings</h2>
+                <button onclick="closeSettings()" class="p-2 hover:bg-emberflare-100 dark:hover:bg-emberflare-800 rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
             </div>
-
-            <!-- Search and Filters -->
-            <div class="search-filters-container">
-                <div class="search-box">
-                    <input type="text" 
-                           class="search-input" 
-                           id="search-input" 
-                           placeholder="Search posts...">
-                    <button class="search-button" id="search-btn">
-                        <i class="fas fa-search"></i>
+            
+            <div class="space-y-4">
+                <div id="username-section" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-emberflare-300 mb-2">
+                        Username
+                    </label>
+                    <div class="flex gap-2">
+                        <input type="text" id="username-input" 
+                               class="flex-1 border border-emberflare-300 dark:border-emberflare-700 rounded-lg px-4 py-2 bg-transparent focus:outline-none focus:border-emberflare-500 dark:focus:border-emberflare-400"
+                               placeholder="Enter username">
+                        <button onclick="updateUsername()" class="bg-emberflare-500 hover:bg-emberflare-600 text-white px-4 py-2 rounded-lg transition-colors">
+                            Update
+                        </button>
+                    </div>
+                    <button onclick="removeUsername()" class="mt-2 text-sm text-emberflare-600 dark:text-emberflare-400 hover:text-emberflare-800 dark:hover:text-emberflare-200">
+                        Remove username
                     </button>
                 </div>
                 
-                <div class="filter-row">
-                    <div class="category-scroll">
-                        <div class="category-list" id="category-list">
-                            <button class="category-btn active" data-category="all">All Posts</button>
-                            <!-- Categories will be loaded dynamically -->
-                        </div>
+                <a href="privacy.html" class="flex items-center justify-between p-4 hover:bg-emberflare-50 dark:hover:bg-emberflare-800 rounded-xl transition-colors">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-emberflare-500">shield</span>
+                        <span class="font-medium">Privacy Policy</span>
                     </div>
-                    
-                    <select class="year-filter" id="year-filter">
-                        <option value="all">All Years</option>
-                        <!-- Years will be loaded dynamically -->
-                    </select>
-                    
-                    <button class="clear-filters" id="clear-filters">
-                        Clear Filters
+                    <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                </a>
+                
+                <a href="terms.html" class="flex items-center justify-between p-4 hover:bg-emberflare-50 dark:hover:bg-emberflare-800 rounded-xl transition-colors">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-emberflare-500">gavel</span>
+                        <span class="font-medium">Terms of Use</span>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                </a>
+                
+                <a href="license.html" class="flex items-center justify-between p-4 hover:bg-emberflare-50 dark:hover:bg-emberflare-800 rounded-xl transition-colors">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-emberflare-500">copyright</span>
+                        <span class="font-medium">License</span>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                </a>
+                
+                <button onclick="logout()" id="logout-btn" class="hidden w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="min-h-screen pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Page Header -->
+            <div class="mb-12 text-center animate-fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-emberflare-600 to-emberflare-400 bg-clip-text text-transparent">
+                    Thoughts & Reflections
+                </h1>
+                <p class="text-xl text-gray-600 dark:text-emberflare-300 max-w-3xl mx-auto">
+                    Personal writings on growth, learning, and life experiences
+                </p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="mb-8 animate-slide-up">
+                <div class="relative max-w-2xl mx-auto">
+                    <input type="text" 
+                           id="search-input"
+                           placeholder="Search posts..."
+                           class="w-full pl-12 pr-4 py-4 bg-white dark:bg-emberflare-900 border-2 border-emberflare-200 dark:border-emberflare-800 rounded-2xl focus:outline-none focus:border-emberflare-500 dark:focus:border-emberflare-400 transition-colors">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-emberflare-400">
+                        search
+                    </span>
+                    <button onclick="clearSearch()" id="clear-search" class="absolute right-4 top-1/2 -translate-y-1/2 text-emberflare-400 hover:text-emberflare-600 hidden">
+                        <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
             </div>
-
-            <!-- Posts Grid -->
-            <div class="posts-grid" id="posts-grid">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>Loading posts...</p>
+            
+            <!-- Filters -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-8 animate-slide-up">
+                <!-- Year Filter -->
+                <div class="relative">
+                    <select id="year-filter" 
+                            class="appearance-none bg-white dark:bg-emberflare-900 border-2 border-emberflare-200 dark:border-emberflare-800 rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:border-emberflare-500 dark:focus:border-emberflare-400 transition-colors">
+                        <option value="">All Years</option>
+                        <!-- Years will be populated dynamically -->
+                    </select>
+                    <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                        expand_more
+                    </span>
                 </div>
+                
+                <!-- Category Filter (Scrollable) -->
+                <div class="flex-1 overflow-hidden">
+                    <div id="category-container" class="flex gap-2 overflow-x-auto pb-2 category-scrollbar">
+                        <button onclick="filterByCategory('')" 
+                                class="category-btn px-4 py-2 bg-emberflare-500 text-white rounded-xl whitespace-nowrap font-medium">
+                            All Posts
+                        </button>
+                        <!-- Categories will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loading" class="flex flex-col items-center justify-center py-20">
+                <div class="w-16 h-16 border-4 border-emberflare-200 dark:border-emberflare-800 border-t-emberflare-500 rounded-full animate-spin mb-4"></div>
+                <p class="text-gray-600 dark:text-emberflare-300">Loading posts...</p>
+            </div>
+            
+            <!-- Posts Grid -->
+            <div id="posts-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Posts will be loaded dynamically -->
+            </div>
+            
+            <!-- No Results -->
+            <div id="no-results" class="hidden text-center py-20">
+                <span class="material-symbols-outlined text-6xl text-emberflare-300 mb-4">
+                    search_off
+                </span>
+                <h3 class="text-2xl font-bold text-gray-700 dark:text-emberflare-200 mb-2">No posts found</h3>
+                <p class="text-gray-600 dark:text-emberflare-400">Try adjusting your search or filters</p>
+            </div>
+            
+            <!-- Load More -->
+            <div id="load-more-container" class="hidden text-center">
+                <button id="load-more-btn" 
+                        onclick="loadMorePosts()"
+                        class="px-8 py-3 bg-emberflare-500 hover:bg-emberflare-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+                    Load More Posts
+                </button>
             </div>
         </div>
     </main>
 
     <!-- Fullscreen Post View -->
-    <div class="post-fullscreen" id="post-fullscreen">
-        <div class="post-fullscreen-header">
-            <button class="post-fullscreen-back" id="post-fullscreen-back">
-                <i class="fas fa-arrow-left"></i>
-                Back to Posts
-            </button>
-            <button class="icon-button" id="post-fullscreen-share">
-                <i class="fas fa-share-alt"></i>
-            </button>
-        </div>
-        
-        <div class="post-fullscreen-content" id="post-fullscreen-content">
-            <!-- Content will be loaded dynamically -->
-        </div>
-    </div>
-
-    <!-- Settings Panel -->
-    <div class="settings-panel" id="settings-panel">
-        <div class="settings-header">
-            <h2 class="settings-title">Settings</h2>
-            <button class="close-settings" id="close-settings">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="settings-content">
-            <div class="settings-section">
-                <h3 class="settings-section-title">Your Profile</h3>
-                <input type="text" 
-                       class="username-input" 
-                       id="username-input" 
-                       placeholder="Set a username (optional)">
-                <button class="settings-btn" id="save-username">
-                    Save Username
-                </button>
-                <button class="settings-btn" id="remove-username">
-                    Remove Username
-                </button>
+    <div id="post-fullscreen" class="fixed inset-0 z-50 hidden overflow-y-auto bg-white dark:bg-emberflare-950">
+        <div class="min-h-screen">
+            <!-- Fullscreen Header -->
+            <header class="sticky top-0 z-40 w-full glass-panel border-b border-emberflare-200 dark:border-emberflare-800">
+                <div class="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+                    <button onclick="closeFullscreenPost()" 
+                            class="flex items-center gap-2 text-emberflare-600 dark:text-emberflare-400 hover:text-emberflare-800 dark:hover:text-emberflare-200 transition-colors group">
+                        <span class="material-symbols-outlined text-xl group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                        <span class="text-sm font-medium hidden sm:inline">Back to Posts</span>
+                    </button>
+                    
+                    <div class="flex items-center gap-2">
+                        <button onclick="sharePost()" 
+                                class="p-2 hover:bg-emberflare-100 dark:hover:bg-emberflare-800 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined">share</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Fullscreen Post Content -->
+            <div id="fullscreen-content" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <!-- Content will be loaded dynamically -->
             </div>
             
-            <div class="settings-section">
-                <h3 class="settings-section-title">Legal</h3>
-                <button class="settings-btn" id="privacy-policy">
-                    Privacy Policy
-                </button>
-                <button class="settings-btn" id="terms-of-use">
-                    Terms of Use
-                </button>
-                <button class="settings-btn" id="license">
-                    License
-                </button>
-            </div>
-            
-            <div class="settings-section">
-                <h3 class="settings-section-title">Account</h3>
-                <button class="settings-btn danger-btn" id="clear-data">
-                    Clear Local Data
-                </button>
+            <!-- Comments Section -->
+            <div id="comments-section" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+                <!-- Comments will be loaded dynamically -->
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-logo">
-                <div class="logo-icon">E</div>
-                <span>Eldrex Writings</span>
+    <footer class="bg-emberflare-50 dark:bg-emberflare-900 border-t border-emberflare-200 dark:border-emberflare-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-emberflare-500 text-[20px]">local_fire_department</span>
+                <span class="text-emberflare-800 dark:text-emberflare-200 font-bold tracking-tight">Eldrex Writings</span>
             </div>
-            <p class="footer-copyright">
-                © 2025 Eldrex Writings. All rights reserved.
-            </p>
+            <div class="text-sm text-emberflare-600 dark:text-emberflare-400">
+                © 2025 Eldrex Delos Reyes Bula. All rights reserved.
+            </div>
         </div>
     </footer>
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script type="module" src="/firebase-config.js"></script>
     
+    <!-- Main App -->
     <script type="module">
-        import { initializeFirebase } from './js/firebase-config.js';
-        import BlogManager from './js/blog.js';
+        import { 
+            db, auth, analytics, 
+            signInAnonymously, onAuthStateChanged, signOut,
+            collection, query, where, orderBy, limit, getDocs, 
+            doc, getDoc, updateDoc, arrayUnion, arrayRemove,
+            onSnapshot, addDoc, deleteDoc, serverTimestamp 
+        } from './firebase-config.js';
+
+        class BlogApp {
+            constructor() {
+                this.currentUser = null;
+                this.posts = [];
+                this.filteredPosts = [];
+                this.categories = new Set();
+                this.years = new Set();
+                this.lastVisible = null;
+                this.isLoading = false;
+                this.currentCategory = '';
+                this.currentYear = '';
+                this.currentSearch = '';
+                
+                this.init();
+            }
+            
+            async init() {
+                // Check authentication state
+                onAuthStateChanged(auth, async (user) => {
+                    this.currentUser = user;
+                    this.updateAuthUI();
+                    
+                    // Load posts if not already loaded
+                    if (this.posts.length === 0) {
+                        await this.loadPosts();
+                        this.renderPosts();
+                        this.updateFilters();
+                    }
+                });
+                
+                // Set up event listeners
+                this.setupEventListeners();
+                
+                // Show auth modal for new visitors
+                if (!localStorage.getItem('auth_shown')) {
+                    setTimeout(() => {
+                        document.getElementById('auth-modal').classList.remove('hidden');
+                    }, 1000);
+                    localStorage.setItem('auth_shown', 'true');
+                }
+            }
+            
+            setupEventListeners() {
+                // Search input
+                const searchInput = document.getElementById('search-input');
+                let searchTimeout;
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        this.currentSearch = e.target.value.trim();
+                        this.filterPosts();
+                        this.updateClearSearchButton();
+                    }, 300);
+                });
+                
+                // Year filter
+                document.getElementById('year-filter').addEventListener('change', (e) => {
+                    this.currentYear = e.target.value;
+                    this.filterPosts();
+                });
+                
+                // Clear search button
+                document.getElementById('clear-search').addEventListener('click', () => {
+                    searchInput.value = '';
+                    this.currentSearch = '';
+                    this.filterPosts();
+                    this.updateClearSearchButton();
+                });
+            }
+            
+            updateClearSearchButton() {
+                const clearBtn = document.getElementById('clear-search');
+                clearBtn.classList.toggle('hidden', !this.currentSearch);
+            }
+            
+            async loadPosts(loadMore = false) {
+                if (this.isLoading) return;
+                
+                this.isLoading = true;
+                const loadingEl = document.getElementById('loading');
+                const postsGrid = document.getElementById('posts-grid');
+                
+                if (!loadMore) {
+                    postsGrid.classList.add('hidden');
+                    loadingEl.classList.remove('hidden');
+                    this.filteredPosts = [];
+                }
+                
+                try {
+                    let postsQuery = query(
+                        collection(db, 'posts'),
+                        where('published', '==', true),
+                        orderBy('createdAt', 'desc'),
+                        limit(loadMore ? 6 : 12)
+                    );
+                    
+                    if (loadMore && this.lastVisible) {
+                        // Add startAfter for pagination
+                        // Note: In practice, you'd need to modify query for proper pagination
+                    }
+                    
+                    const snapshot = await getDocs(postsQuery);
+                    
+                    if (!loadMore) {
+                        this.posts = [];
+                    }
+                    
+                    snapshot.forEach(doc => {
+                        const post = {
+                            id: doc.id,
+                            ...doc.data(),
+                            createdAt: doc.data().createdAt?.toDate() || new Date()
+                        };
+                        
+                        if (!this.posts.find(p => p.id === post.id)) {
+                            this.posts.push(post);
+                            
+                            // Extract categories
+                            if (post.category) {
+                                this.categories.add(post.category);
+                            }
+                            
+                            // Extract year
+                            const year = post.createdAt.getFullYear();
+                            this.years.add(year);
+                        }
+                    });
+                    
+                    // Update last visible document for pagination
+                    this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                    
+                } catch (error) {
+                    console.error('Error loading posts:', error);
+                    this.showError('Failed to load posts. Please try again.');
+                } finally {
+                    this.isLoading = false;
+                    loadingEl.classList.add('hidden');
+                }
+            }
+            
+            filterPosts() {
+                this.filteredPosts = this.posts.filter(post => {
+                    // Category filter
+                    if (this.currentCategory && post.category !== this.currentCategory) {
+                        return false;
+                    }
+                    
+                    // Year filter
+                    if (this.currentYear) {
+                        const postYear = post.createdAt.getFullYear();
+                        if (postYear.toString() !== this.currentYear) {
+                            return false;
+                        }
+                    }
+                    
+                    // Search filter
+                    if (this.currentSearch) {
+                        const searchTerm = this.currentSearch.toLowerCase();
+                        const titleMatch = post.title?.toLowerCase().includes(searchTerm);
+                        const excerptMatch = post.excerpt?.toLowerCase().includes(searchTerm);
+                        const categoryMatch = post.category?.toLowerCase().includes(searchTerm);
+                        return titleMatch || excerptMatch || categoryMatch;
+                    }
+                    
+                    return true;
+                });
+                
+                this.renderPosts();
+                this.updateLoadMoreButton();
+            }
+            
+            renderPosts() {
+                const postsGrid = document.getElementById('posts-grid');
+                const noResults = document.getElementById('no-results');
+                
+                if (this.filteredPosts.length === 0) {
+                    postsGrid.classList.add('hidden');
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                
+                postsGrid.classList.remove('hidden');
+                noResults.classList.add('hidden');
+                
+                postsGrid.innerHTML = this.filteredPosts.map(post => `
+                    <article class="bg-white dark:bg-emberflare-900 rounded-2xl border border-emberflare-200 dark:border-emberflare-800 overflow-hidden post-card-hover group cursor-pointer"
+                             onclick="blogApp.openFullscreenPost('${post.id}')">
+                        
+                        ${post.imageUrl ? `
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="${post.imageUrl}" 
+                                     alt="${post.title}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                     loading="lazy">
+                                <div class="absolute top-3 left-3">
+                                    <span class="px-3 py-1 bg-emberflare-500 text-white text-xs font-semibold rounded-full">
+                                        ${post.category || 'Uncategorized'}
+                                    </span>
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-sm text-emberflare-500 mb-3">
+                                <span class="material-symbols-outlined text-base">calendar_today</span>
+                                <span>${this.formatDate(post.createdAt)}</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white line-clamp-2">
+                                ${post.title}
+                            </h3>
+                            
+                            <p class="text-gray-600 dark:text-emberflare-300 mb-4 line-clamp-3">
+                                ${post.excerpt || ''}
+                            </p>
+                            
+                            <div class="flex items-center justify-between pt-4 border-t border-emberflare-100 dark:border-emberflare-800">
+                                <button class="flex items-center gap-2 text-emberflare-600 dark:text-emberflare-400 group-hover:text-emberflare-800 dark:group-hover:text-emberflare-200 transition-colors">
+                                    <span class="material-symbols-outlined">arrow_forward</span>
+                                    <span class="font-medium">Read More</span>
+                                </button>
+                                
+                                <div class="flex items-center gap-4">
+                                    <button onclick="event.stopPropagation(); blogApp.likePost('${post.id}')"
+                                            class="flex items-center gap-1 text-gray-500 hover:text-emberflare-500 transition-colors">
+                                        <span class="material-symbols-outlined">favorite</span>
+                                        <span class="text-sm" id="like-count-${post.id}">${post.likes || 0}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+            }
+            
+            updateFilters() {
+                // Update category filters
+                const categoryContainer = document.getElementById('category-container');
+                const categoryButtons = Array.from(this.categories).map(category => `
+                    <button onclick="blogApp.filterByCategory('${category}')" 
+                            class="category-btn px-4 py-2 bg-emberflare-100 dark:bg-emberflare-800 hover:bg-emberflare-200 dark:hover:bg-emberflare-700 text-emberflare-700 dark:text-emberflare-300 rounded-xl whitespace-nowrap transition-colors">
+                        ${category}
+                    </button>
+                `).join('');
+                
+                categoryContainer.innerHTML += categoryButtons;
+                
+                // Update year filters
+                const yearFilter = document.getElementById('year-filter');
+                const yearOptions = Array.from(this.years)
+                    .sort((a, b) => b - a)
+                    .map(year => `<option value="${year}">${year}</option>`)
+                    .join('');
+                
+                yearFilter.innerHTML += yearOptions;
+            }
+            
+            updateLoadMoreButton() {
+                const container = document.getElementById('load-more-container');
+                const hasMorePosts = this.filteredPosts.length < this.posts.length;
+                container.classList.toggle('hidden', !hasMorePosts);
+            }
+            
+            filterByCategory(category) {
+                this.currentCategory = category;
+                this.filterPosts();
+                
+                // Update active category button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('bg-emberflare-500', 'text-white');
+                    btn.classList.add('bg-emberflare-100', 'dark:bg-emberflare-800', 'text-emberflare-700', 'dark:text-emberflare-300');
+                });
+                
+                if (category) {
+                    const activeBtn = Array.from(document.querySelectorAll('.category-btn'))
+                        .find(btn => btn.textContent.trim() === category);
+                    if (activeBtn) {
+                        activeBtn.classList.remove('bg-emberflare-100', 'dark:bg-emberflare-800', 'text-emberflare-700', 'dark:text-emberflare-300');
+                        activeBtn.classList.add('bg-emberflare-500', 'text-white');
+                    }
+                } else {
+                    const allPostsBtn = document.querySelector('.category-btn');
+                    if (allPostsBtn) {
+                        allPostsBtn.classList.remove('bg-emberflare-100', 'dark:bg-emberflare-800', 'text-emberflare-700', 'dark:text-emberflare-300');
+                        allPostsBtn.classList.add('bg-emberflare-500', 'text-white');
+                    }
+                }
+            }
+            
+            async loadMorePosts() {
+                await this.loadPosts(true);
+                this.filterPosts();
+            }
+            
+            async openFullscreenPost(postId) {
+                try {
+                    const postRef = doc(db, 'posts', postId);
+                    const postSnap = await getDoc(postRef);
+                    
+                    if (!postSnap.exists()) {
+                        throw new Error('Post not found');
+                    }
+                    
+                    const post = {
+                        id: postSnap.id,
+                        ...postSnap.data(),
+                        createdAt: postSnap.data().createdAt?.toDate() || new Date()
+                    };
+                    
+                    // Update URL without reload
+                    history.pushState({ postId }, '', `?post=${postId}`);
+                    
+                    // Show fullscreen view
+                    const fullscreen = document.getElementById('post-fullscreen');
+                    fullscreen.classList.remove('hidden');
+                    document.body.classList.add('overflow-hidden');
+                    
+                    // Render post content
+                    this.renderFullscreenPost(post);
+                    
+                    // Load comments
+                    await this.loadComments(postId);
+                    
+                } catch (error) {
+                    console.error('Error opening post:', error);
+                    this.showError('Failed to load post. Please try again.');
+                }
+            }
+            
+            renderFullscreenPost(post) {
+                const contentEl = document.getElementById('fullscreen-content');
+                
+                contentEl.innerHTML = `
+                    <div class="animate-fade-in">
+                        ${post.imageUrl ? `
+                            <div class="mb-8 rounded-2xl overflow-hidden">
+                                <img src="${post.imageUrl}" 
+                                     alt="${post.title}"
+                                     class="w-full h-96 object-cover"
+                                     loading="lazy">
+                            </div>
+                        ` : ''}
+                        
+                        <div class="mb-8">
+                            <div class="flex items-center gap-4 text-sm text-emberflare-500 mb-4">
+                                <span class="px-3 py-1 bg-emberflare-100 dark:bg-emberflare-800 rounded-full">
+                                    ${post.category || 'Uncategorized'}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-base">calendar_today</span>
+                                    ${this.formatDate(post.createdAt)}
+                                </span>
+                            </div>
+                            
+                            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+                                ${post.title}
+                            </h1>
+                            
+                            <div class="prose prose-lg dark:prose-invert max-w-none">
+                                ${post.content || ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            closeFullscreenPost() {
+                const fullscreen = document.getElementById('post-fullscreen');
+                fullscreen.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+                history.replaceState(null, '', window.location.pathname);
+            }
+            
+            async loadComments(postId) {
+                const commentsSection = document.getElementById('comments-section');
+                
+                try {
+                    const commentsQuery = query(
+                        collection(db, 'posts', postId, 'comments'),
+                        orderBy('createdAt', 'desc')
+                    );
+                    
+                    const snapshot = await getDocs(commentsQuery);
+                    const comments = [];
+                    
+                    snapshot.forEach(doc => {
+                        comments.push({
+                            id: doc.id,
+                            ...doc.data(),
+                            createdAt: doc.data().createdAt?.toDate() || new Date()
+                        });
+                    });
+                    
+                    this.renderComments(commentsSection, postId, comments);
+                    
+                } catch (error) {
+                    console.error('Error loading comments:', error);
+                    commentsSection.innerHTML = `
+                        <div class="text-center py-8 text-gray-500">
+                            Failed to load comments
+                        </div>
+                    `;
+                }
+            }
+            
+            renderComments(container, postId, comments) {
+                const isLoggedIn = !!this.currentUser;
+                
+                container.innerHTML = `
+                    <div class="animate-slide-up">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold">Comments</h2>
+                            <span class="text-gray-500">${comments.length} comments</span>
+                        </div>
+                        
+                        ${isLoggedIn ? `
+                            <div class="mb-8 bg-emberflare-50 dark:bg-emberflare-900 rounded-2xl p-6">
+                                <textarea id="comment-input" 
+                                          placeholder="Share your thoughts..."
+                                          class="w-full bg-transparent border-none focus:outline-none resize-none mb-4 min-h-[100px]"
+                                          rows="3"></textarea>
+                                <div class="flex justify-end">
+                                    <button onclick="blogApp.postComment('${postId}')"
+                                            class="px-6 py-2 bg-emberflare-500 hover:bg-emberflare-600 text-white font-semibold rounded-xl transition-colors">
+                                        Post Comment
+                                    </button>
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="mb-8 bg-emberflare-50 dark:bg-emberflare-900 rounded-2xl p-6 text-center">
+                                <p class="text-gray-600 dark:text-emberflare-300 mb-4">
+                                    Please log in to post comments
+                                </p>
+                                <button onclick="blogApp.showAuthModal()"
+                                        class="px-6 py-2 bg-emberflare-500 hover:bg-emberflare-600 text-white font-semibold rounded-xl transition-colors">
+                                    Log In
+                                </button>
+                            </div>
+                        `}
+                        
+                        <div id="comments-list" class="space-y-6">
+                            ${comments.length > 0 ? comments.map(comment => `
+                                <div class="bg-emberflare-50 dark:bg-emberflare-900 rounded-2xl p-6 comment-enter">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-emberflare-100 dark:bg-emberflare-800 rounded-full flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-emberflare-500">
+                                                    person
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-semibold">${comment.authorName || 'Anonymous'}</span>
+                                                    ${comment.isAdmin ? `
+                                                        <img src="/admin-badge.png" alt="Admin" class="w-4 h-4">
+                                                    ` : ''}
+                                                </div>
+                                                <span class="text-xs text-gray-500">
+                                                    ${this.formatRelativeTime(comment.createdAt)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        ${comment.userId === this.currentUser?.uid ? `
+                                            <button onclick="blogApp.deleteComment('${postId}', '${comment.id}')"
+                                                    class="text-gray-400 hover:text-red-500">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                    
+                                    ${this.isContentModerated(comment.content) ? `
+                                        <div class="blurred relative">
+                                            <p>${comment.content}</p>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <div class="text-center p-4">
+                                                    <span class="material-symbols-outlined text-4xl text-emberflare-400 mb-2">
+                                                        warning
+                                                    </span>
+                                                    <p class="text-sm text-gray-600">Content moderated for respectful communication</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ` : `
+                                        <p class="text-gray-700 dark:text-emberflare-300">${comment.content}</p>
+                                    `}
+                                </div>
+                            `).join('') : `
+                                <div class="text-center py-12 text-gray-500">
+                                    <span class="material-symbols-outlined text-6xl mb-4">
+                                        forum
+                                    </span>
+                                    <p>No comments yet. Be the first to share your thoughts!</p>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            async likePost(postId) {
+                if (!this.currentUser) {
+                    this.showAuthModal();
+                    return;
+                }
+                
+                try {
+                    const postRef = doc(db, 'posts', postId);
+                    const postSnap = await getDoc(postRef);
+                    
+                    if (postSnap.exists()) {
+                        const post = postSnap.data();
+                        const likes = post.likes || 0;
+                        
+                        await updateDoc(postRef, {
+                            likes: likes + 1
+                        });
+                        
+                        // Update UI
+                        const likeCountEl = document.getElementById(`like-count-${postId}`);
+                        if (likeCountEl) {
+                            likeCountEl.textContent = likes + 1;
+                        }
+                        
+                        // Add ripple effect
+                        this.createRipple(event);
+                    }
+                } catch (error) {
+                    console.error('Error liking post:', error);
+                }
+            }
+            
+            async postComment(postId) {
+                if (!this.currentUser) {
+                    this.showAuthModal();
+                    return;
+                }
+                
+                const commentInput = document.getElementById('comment-input');
+                const content = commentInput.value.trim();
+                
+                if (!content) {
+                    this.showError('Please enter a comment');
+                    return;
+                }
+                
+                // Check for restricted content
+                if (this.isContentRestricted(content)) {
+                    this.showError('Your comment contains restricted content. Please revise.');
+                    return;
+                }
+                
+                try {
+                    const commentData = {
+                        content,
+                        userId: this.currentUser.uid,
+                        authorName: localStorage.getItem('username') || 'Anonymous',
+                        isAdmin: false,
+                        createdAt: serverTimestamp()
+                    };
+                    
+                    await addDoc(collection(db, 'posts', postId, 'comments'), commentData);
+                    
+                    commentInput.value = '';
+                    this.showSuccess('Comment posted successfully');
+                    
+                    // Reload comments
+                    await this.loadComments(postId);
+                    
+                } catch (error) {
+                    console.error('Error posting comment:', error);
+                    this.showError('Failed to post comment');
+                }
+            }
+            
+            async deleteComment(postId, commentId) {
+                if (!confirm('Are you sure you want to delete this comment?')) return;
+                
+                try {
+                    await deleteDoc(doc(db, 'posts', postId, 'comments', commentId));
+                    this.showSuccess('Comment deleted');
+                    await this.loadComments(postId);
+                } catch (error) {
+                    console.error('Error deleting comment:', error);
+                    this.showError('Failed to delete comment');
+                }
+            }
+            
+            isContentRestricted(content) {
+                const restrictedPatterns = [
+                    /eldrex.*delos.*reyes.*bula/i,
+                    /admin.*password/i,
+                    /hack|hacking/i,
+                    /spam.*link/i,
+                    /https?:\/\//i,
+                    /@.*\..*/i
+                ];
+                
+                return restrictedPatterns.some(pattern => pattern.test(content));
+            }
+            
+            isContentModerated(content) {
+                const moderatedPatterns = [
+                    /idiot|stupid|dumb|ugly/i,
+                    /hate|kill|die/i,
+                    /shit|fuck|damn/i,
+                    /racist|sexist|homophobic/i
+                ];
+                
+                return moderatedPatterns.some(pattern => pattern.test(content));
+            }
+            
+            showAuthModal() {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            }
+            
+            closeAuthModal() {
+                document.getElementById('auth-modal').classList.add('hidden');
+            }
+            
+            async loginAnonymously() {
+                try {
+                    await signInAnonymously(auth);
+                    this.closeAuthModal();
+                    this.showSuccess('Logged in anonymously');
+                } catch (error) {
+                    console.error('Anonymous login error:', error);
+                    this.showError('Failed to log in');
+                }
+            }
+            
+            continueWithoutLogin() {
+                this.closeAuthModal();
+                this.showMessage('You can still read posts and comments');
+            }
+            
+            openSettings() {
+                const panel = document.getElementById('settings-panel');
+                panel.classList.remove('hidden');
+                setTimeout(() => {
+                    panel.querySelector('.absolute.bottom-0').style.transform = 'translateY(0)';
+                }, 10);
+            }
+            
+            closeSettings() {
+                const panel = document.getElementById('settings-panel');
+                panel.querySelector('.absolute.bottom-0').style.transform = 'translateY(100%)';
+                setTimeout(() => {
+                    panel.classList.add('hidden');
+                }, 300);
+            }
+            
+            updateAuthUI() {
+                const usernameSection = document.getElementById('username-section');
+                const logoutBtn = document.getElementById('logout-btn');
+                
+                if (this.currentUser) {
+                    usernameSection.classList.remove('hidden');
+                    logoutBtn.classList.remove('hidden');
+                    
+                    const savedUsername = localStorage.getItem('username');
+                    if (savedUsername) {
+                        document.getElementById('username-input').value = savedUsername;
+                    }
+                } else {
+                    usernameSection.classList.add('hidden');
+                    logoutBtn.classList.add('hidden');
+                }
+            }
+            
+            async updateUsername() {
+                const input = document.getElementById('username-input');
+                const username = input.value.trim();
+                
+                if (!username) {
+                    this.showError('Please enter a username');
+                    return;
+                }
+                
+                // Check for restricted usernames
+                if (this.isUsernameRestricted(username)) {
+                    this.showError('This username is not allowed');
+                    return;
+                }
+                
+                localStorage.setItem('username', username);
+                this.showSuccess('Username updated');
+                this.closeSettings();
+            }
+            
+            removeUsername() {
+                localStorage.removeItem('username');
+                document.getElementById('username-input').value = '';
+                this.showSuccess('Username removed');
+            }
+            
+            isUsernameRestricted(username) {
+                const restricted = [
+                    'admin',
+                    'administrator',
+                    'eldrex',
+                    'eldrex delos reyes bula',
+                    'moderator',
+                    'system'
+                ];
+                
+                return restricted.some(name => 
+                    username.toLowerCase().includes(name.toLowerCase())
+                );
+            }
+            
+            async logout() {
+                try {
+                    await signOut(auth);
+                    localStorage.removeItem('username');
+                    this.closeSettings();
+                    this.showSuccess('Logged out successfully');
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    this.showError('Failed to log out');
+                }
+            }
+            
+            sharePost() {
+                const postTitle = document.querySelector('#fullscreen-content h1')?.textContent || '';
+                const postUrl = window.location.href;
+                
+                const shareData = {
+                    title: postTitle,
+                    text: `Check out this post: ${postTitle}`,
+                    url: postUrl
+                };
+                
+                if (navigator.share) {
+                    navigator.share(shareData);
+                } else {
+                    navigator.clipboard.writeText(postUrl);
+                    this.showSuccess('Link copied to clipboard');
+                }
+            }
+            
+            createRipple(event) {
+                const button = event.currentTarget;
+                const ripple = document.createElement('span');
+                const rect = button.getBoundingClientRect();
+                
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                `;
+                
+                ripple.classList.add('ripple');
+                button.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            }
+            
+            formatDate(date) {
+                return new Date(date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+            
+            formatRelativeTime(date) {
+                const now = new Date();
+                const diffMs = now - new Date(date);
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 1) return 'just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                
+                return this.formatDate(date);
+            }
+            
+            showSuccess(message) {
+                this.showNotification(message, 'bg-green-500');
+            }
+            
+            showError(message) {
+                this.showNotification(message, 'bg-red-500');
+            }
+            
+            showMessage(message) {
+                this.showNotification(message, 'bg-emberflare-500');
+            }
+            
+            showNotification(message, bgColor) {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-3 rounded-xl shadow-lg animate-slide-up z-50`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('opacity-0', 'translate-y-2');
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+        }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeFirebase();
-            const blog = new BlogManager();
-            window.blog = blog;
+        // Initialize app
+        window.blogApp = new BlogApp();
+        
+        // Global helper functions
+        window.openAuthModal = () => blogApp.showAuthModal();
+        window.closeAuthModal = () => blogApp.closeAuthModal();
+        window.loginAnonymously = () => blogApp.loginAnonymously();
+        window.continueWithoutLogin = () => blogApp.continueWithoutLogin();
+        window.openSettings = () => blogApp.openSettings();
+        window.closeSettings = () => blogApp.closeSettings();
+        window.updateUsername = () => blogApp.updateUsername();
+        window.removeUsername = () => blogApp.removeUsername();
+        window.logout = () => blogApp.logout();
+        window.filterByCategory = (category) => blogApp.filterByCategory(category);
+        window.loadMorePosts = () => blogApp.loadMorePosts();
+        window.sharePost = () => blogApp.sharePost();
+        window.closeFullscreenPost = () => blogApp.closeFullscreenPost();
+        window.clearSearch = () => {
+            document.getElementById('search-input').value = '';
+            blogApp.currentSearch = '';
+            blogApp.filterPosts();
+            blogApp.updateClearSearchButton();
+        };
+        
+        // Handle browser back button for fullscreen post
+        window.addEventListener('popstate', (event) => {
+            if (event.state?.postId) {
+                blogApp.openFullscreenPost(event.state.postId);
+            } else {
+                blogApp.closeFullscreenPost();
+            }
         });
     </script>
 </body>
