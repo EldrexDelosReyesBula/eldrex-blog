@@ -38,13 +38,14 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyChd3wKk1KXZNZQs8fDZRiUFbelciQnT1w",
-    authDomain: "eldrex-blog.firebaseapp.com",
-    projectId: "eldrex-blog",
-    storageBucket: "eldrex-blog.firebasestorage.app",
-    messagingSenderId: "1016235801394",
-    appId: "1:1016235801394:web:c1f8d532843db7bfd1b52b",
-    measurementId: "G-DHTY1BBPFP"
+   apiKey: "AIzaSyChd3wKk1KXZNZQs8fDZRiUFbelciQnT1w",
+  authDomain: "eldrex-blog.firebaseapp.com",
+  databaseURL: "https://eldrex-blog-default-rtdb.firebaseio.com",
+  projectId: "eldrex-blog",
+  storageBucket: "eldrex-blog.firebasestorage.app",
+  messagingSenderId: "1016235801394",
+  appId: "1:1016235801394:web:c1f8d532843db7bfd1b52b",
+  measurementId: "G-DHTY1BBPFP"
 };
 
 // Initialize Firebase
